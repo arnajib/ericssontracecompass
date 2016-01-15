@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.linuxtools.tmf.ui.tracetypeui">
+      <type
+            icon="icons/obj16/garland16.png"
+            tracetype="org.eclipse.linuxtools.lttng2.ust.tracetype">
+      </type>
+   </extension>
+   <extension
+         point="org.eclipse.ui.views">
+      <view
+            category="org.eclipse.linuxtools.lttng2.ui.views.category"
+            class="org.eclipse.tracecompass.internal.lttng2.ust.ui.views.memusage.MemoryUsageView"
+            icon="icons/eview16/memory-usage.png"
+            id="org.eclipse.linuxtools.lttng2.ust.memoryusage"
+            name="%memoryusage.view.name"
+            restorable="true">
+      </view>
+   </extension>
+   <extension
+         point="org.eclipse.linuxtools.tmf.core.analysis">
+      <module
+            analysis_module="org.eclipse.tracecompass.lttng2.ust.ui.analysis.callstack.LttngUstCallStackAnalysis"
+            automatic="false"
+            id="org.eclipse.linuxtools.lttng2.ust.analysis.callstack"
+            name="%analysis.callstack">
+         <tracetype
+               applies="true"
+               class="org.eclipse.tracecompass.lttng2.ust.core.trace.LttngUstTrace">
+         </tracetype>
+      </module>
+      <output
+            class="org.eclipse.tracecompass.tmf.ui.analysis.TmfAnalysisViewOutput"
+            id="org.eclipse.linuxtools.lttng2.ust.memoryusage">
+         <analysisId
+               id="org.eclipse.linuxtools.lttng2.ust.analysis.memory">
+         </analysisId>
+      </output>
+   </extension>
+</plugin>
