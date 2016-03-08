@@ -2555,5 +2555,4 @@ public class TimeGraphViewer implements ITimeDataProvider, IMarkerAxisListener, 
         layout.marginRight = Math.max(0, marginSize);
         fTimeAlignedComposite.layout();
     }
-
 }

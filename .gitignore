@@ -3,3 +3,5 @@ bin/
 target/
 workspace/
 */.settings/org.sonar.ide.eclipse.core.prefs
+.metadata/
+.recommenders/

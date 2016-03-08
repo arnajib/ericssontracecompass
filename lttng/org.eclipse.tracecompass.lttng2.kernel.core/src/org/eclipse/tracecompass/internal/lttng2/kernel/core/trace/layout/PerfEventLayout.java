@@ -16,6 +16,7 @@ import static org.eclipse.tracecompass.common.core.NonNullUtils.checkNotNull;
 
 import java.util.Collection;
 
+import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.tracecompass.analysis.os.linux.core.trace.IKernelAnalysisEventLayout;
 
@@ -164,6 +165,16 @@ public class PerfEventLayout implements IKernelAnalysisEventLayout {
         return "timer:hrtimer_expire_exit"; //$NON-NLS-1$
     }
 
+    @Override
+    public @NonNull String eventKmemPageAlloc() {
+        return "kmem:page_alloc"; //$NON-NLS-1$
+    }
+
+    @Override
+    public @NonNull String eventKmemPageFree() {
+        return "kmem:page_free"; //$NON-NLS-1$
+    }
+
     // ------------------------------------------------------------------------
     // Field names
     // ------------------------------------------------------------------------
@@ -282,5 +293,4 @@ public class PerfEventLayout implements IKernelAnalysisEventLayout {
     public String fieldHRtimerNow() {
         return "now"; //$NON-NLS-1$
     }
-
 }

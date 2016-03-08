@@ -86,6 +86,8 @@ public class DefaultEventLayout implements IKernelAnalysisEventLayout {
     private static final String EXPIRES = "expires"; //$NON-NLS-1$
     private static final String NOW = "now"; //$NON-NLS-1$
     private static final String SOFT_EXPIRES = "softexpires"; //$NON-NLS-1$
+    private static final String KMEM_ALLOC = "kmem_mm_page_alloc"; //$NON-NLS-1$
+    private static final String KMEM_FREE = "kmem_mm_page_free"; //$NON-NLS-1$
 
     /**
      * Constructor, to be used by classes extending this one. To get an instance
@@ -190,6 +192,22 @@ public class DefaultEventLayout implements IKernelAnalysisEventLayout {
     @Override
     public String eventCompatSyscallExitPrefix() {
         return SYSCALL_EXIT_PREFIX;
+    }
+    /**
+     * @since 2.0
+     */
+    @Override
+    public String eventKmemPageAlloc() {
+        return KMEM_ALLOC;
+    }
+
+    /**
+     * @since 2.0
+     */
+    @Override
+    public String eventKmemPageFree() {
+        return KMEM_FREE;
+
     }
 
     // ------------------------------------------------------------------------
