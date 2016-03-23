@@ -28,6 +28,12 @@ public class ControlFlowEntry extends TimeGraphEntry {
     private final int fThreadQuark;
 
     /**
+     * This column is for keeping the order we found with the scheduling algorithm.
+     * It will be used for sorting.
+     */
+    private long fSchedulingPosition;
+
+    /**
      * Constructor
      *
      * @param quark
@@ -44,13 +50,16 @@ public class ControlFlowEntry extends TimeGraphEntry {
      *            The start time of this process's lifetime
      * @param endTime
      *            The end time of this process
+     * @since 2.0
      */
-    public ControlFlowEntry(int quark, @NonNull ITmfTrace trace, String execName, int threadId, int parentThreadId, long startTime, long endTime) {
+    public ControlFlowEntry(int quark, @NonNull ITmfTrace trace, String execName, int threadId,
+            int parentThreadId, long startTime, long endTime) {
         super(execName, startTime, endTime);
         fTrace = trace;
         fThreadId = threadId;
         fParentThreadId = parentThreadId;
         fThreadQuark = quark;
+        fSchedulingPosition = Long.MAX_VALUE;
     }
 
     /**
@@ -103,5 +112,26 @@ public class ControlFlowEntry extends TimeGraphEntry {
     @Override
     public String toString() {
         return getClass().getSimpleName() + '(' + getName() + '[' + fThreadId + "])"; //$NON-NLS-1$
+    }
+
+    /**
+     * Get the position this entry should be according to the scheduling algorithm
+     *
+     * @return The position
+     * @since 2.0
+     */
+    public long getSchedulingPosition() {
+        return fSchedulingPosition;
+    }
+
+    /**
+     * Set the position this entry should be according to the scheduling algorithm
+     *
+     * @param schedulingPosition
+     *          The position
+     * @since 2.0
+     */
+    public void setSchedulingPosition(long schedulingPosition) {
+        fSchedulingPosition = schedulingPosition;
     }
 }

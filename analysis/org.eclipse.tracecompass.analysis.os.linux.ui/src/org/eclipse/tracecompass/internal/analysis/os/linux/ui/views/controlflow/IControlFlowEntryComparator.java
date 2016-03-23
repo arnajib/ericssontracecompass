@@ -109,4 +109,17 @@ public interface IControlFlowEntryComparator {
         }
     };
 
+    /**
+     * Scheduling Comparator
+     */
+    Comparator<ITimeGraphEntry> SCHEDULING_COMPARATOR = new Comparator<ITimeGraphEntry>() {
+        @Override
+        public int compare(@Nullable ITimeGraphEntry o1, @Nullable ITimeGraphEntry o2) {
+            if (o1 == null || o2 == null) {
+                throw new IllegalArgumentException();
+            }
+            return Long.compare(((ControlFlowEntry)o1).getSchedulingPosition(), ((ControlFlowEntry)o2).getSchedulingPosition());
+        }
+    };
+
 }

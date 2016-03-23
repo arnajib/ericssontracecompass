@@ -10,6 +10,8 @@
  *   Patrick Tasse - Initial API and implementation
  *   Geneviève Bastien - Move code to provide base classes for time graph view
  *   Christian Mansky - Add check active / uncheck inactive buttons
+ *   Mahdi Zolnouri & Samuel Gagnon - Add flat / hierarchical button
+ *
  *******************************************************************************/
 
 package org.eclipse.tracecompass.analysis.os.linux.ui.views.controlflow;
@@ -17,15 +19,22 @@ package org.eclipse.tracecompass.analysis.os.linux.ui.views.controlflow;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.TreeSet;
+import java.util.stream.Collectors;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IAction;
+import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.action.MenuManager;
+import org.eclipse.jface.action.Separator;
 import org.eclipse.jface.dialogs.IDialogSettings;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.swt.events.MenuDetectEvent;
@@ -33,11 +42,13 @@ import org.eclipse.swt.events.MenuDetectListener;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.TreeItem;
 import org.eclipse.tracecompass.analysis.os.linux.core.kernel.Attributes;
 import org.eclipse.tracecompass.analysis.os.linux.core.kernel.KernelAnalysisModule;
 import org.eclipse.tracecompass.internal.analysis.os.linux.ui.Activator;
+import org.eclipse.tracecompass.internal.analysis.os.linux.ui.IControlflowImageConstants;
 import org.eclipse.tracecompass.internal.analysis.os.linux.ui.Messages;
 import org.eclipse.tracecompass.internal.analysis.os.linux.ui.actions.FollowThreadAction;
 import org.eclipse.tracecompass.internal.analysis.os.linux.ui.views.controlflow.ControlFlowColumnComparators;
@@ -51,6 +62,7 @@ import org.eclipse.tracecompass.statesystem.core.statevalue.ITmfStateValue;
 import org.eclipse.tracecompass.tmf.core.statesystem.TmfStateSystemAnalysisModule;
 import org.eclipse.tracecompass.tmf.core.trace.ITmfTrace;
 import org.eclipse.tracecompass.tmf.core.trace.TmfTraceManager;
+import org.eclipse.tracecompass.tmf.core.util.Pair;
 import org.eclipse.tracecompass.tmf.ui.views.timegraph.AbstractStateSystemTimeGraphView;
 import org.eclipse.tracecompass.tmf.ui.widgets.timegraph.TimeGraphCombo;
 import org.eclipse.tracecompass.tmf.ui.widgets.timegraph.model.ILinkEvent;
@@ -85,6 +97,16 @@ public class ControlFlowView extends AbstractStateSystemTimeGraphView {
     private static final String PTID_COLUMN = Messages.ControlFlowView_ptidColumn;
     private static final String BIRTH_TIME_COLUMN = Messages.ControlFlowView_birthTimeColumn;
     private static final String TRACE_COLUMN = Messages.ControlFlowView_traceColumn;
+    private static final String INVISIBLE_COLUMN = Messages.ControlFlowView_invisibleColumn;
+    private Action fOptimizationAction;
+
+    // Those two fields are constructed in buildEventList and they are
+    // used to swap between flat view and hierarchical view
+    private List<TimeGraphEntry> fFlatList;
+    private List<TimeGraphEntry> fHierarchicalList;
+    MenuManager fItem;
+
+    private boolean fIsFlatViewClicked = false;
 
     private static final String[] COLUMN_NAMES = new String[] {
             PROCESS_COLUMN,
@@ -174,6 +196,13 @@ public class ControlFlowView extends AbstractStateSystemTimeGraphView {
 
     @Override
     protected void fillLocalToolBar(IToolBarManager manager) {
+        // add "Optimization" Button to local tool bar of Controlflow
+        IAction optimizationAction = getOptimizationAction();
+        manager.add(optimizationAction);
+
+        // add a seperator to local tool bar
+        manager.add(new Separator());
+
         super.fillLocalToolBar(manager);
         IDialogSettings settings = Activator.getDefault().getDialogSettings();
         IDialogSettings section = settings.getSection(getClass().getName());
@@ -193,6 +222,238 @@ public class ControlFlowView extends AbstractStateSystemTimeGraphView {
         followArrowFwdAction.setText(Messages.ControlFlowView_followCPUFwdText);
         followArrowFwdAction.setToolTipText(Messages.ControlFlowView_followCPUFwdText);
         manager.add(followArrowFwdAction);
+    }
+
+    private IAction getOptimizationAction() {
+        if (fOptimizationAction == null) {
+            fOptimizationAction = new Action() {
+
+                @Override
+                public void runWithEvent(Event event) {
+                    // Representation for the transition graph between tids
+                    class AdjacencyLists {
+                        // Map of every thread to its position its the adjacency list
+                        Map<Integer, Integer> tidToPos;
+                        Set<Integer> tids;
+                        List<Integer>[] adj;
+
+                        public AdjacencyLists(List<Pair<Integer, Integer>> edges) {
+                            // We begin by constructing tidToPos. We will need it for constructing adj.
+                            // We also construct tids. We will need it for the grouping algorithm
+                            tidToPos = new HashMap<>();
+                            tids = new TreeSet<>();
+                            int pos = 0;
+                            for (Pair<Integer, Integer> edge : edges) {
+                                int fromTid = edge.getFirst();
+                                int toTid   = edge.getSecond();
+                                tids.add(fromTid);
+                                tids.add(toTid);
+                                if (!tidToPos.containsKey(fromTid)) {
+                                    tidToPos.put(fromTid, pos);
+                                    pos++;
+                                }
+                                if (!tidToPos.containsKey(toTid)) {
+                                    tidToPos.put(toTid, pos);
+                                    pos++;
+                                }
+                            }
+
+                            // We now insert every edge in the adjacency list
+                            int nVertices = tidToPos.size();
+                            adj = new List[nVertices];
+                            for (int i=0; i<nVertices; i++) {
+                                adj[i] = new ArrayList<>();
+                            }
+                            for (Pair<Integer, Integer> edge : edges) {
+                                int fromTid = edge.getFirst();
+                                int toTid = edge.getSecond();
+                                int fromTidPos = tidToPos.getOrDefault(fromTid, -1);
+                                int toTidPos = tidToPos.getOrDefault(toTid, -1);
+                                assert(fromTidPos != -1 && toTidPos != -1);
+
+                                assert(!adj[fromTidPos].contains(toTid)); //CHECKUP TEMPORAIRE
+                                adj[fromTidPos].add(toTid);
+                                assert(!adj[toTidPos].contains(fromTid)); //CHECKUP TEMPORAIRE
+                                adj[toTidPos].add(fromTid);
+                            }
+                        }
+
+                        public List<List<Integer>> getGroupedTids() {
+                            TreeSet<Integer> remainingTids = new TreeSet<>(tids);
+                            LinkedList<List<Integer>> groupedTids = new LinkedList<>();
+
+
+                            // Each time we exit DFS, it means we completly visited a subgraph.
+                            // If remainingTids is not empty, there are subgraph left to visit
+                            while (!remainingTids.isEmpty()) {
+                                // tid to initialize the DFS
+                                Integer tid = remainingTids.first();
+                                remainingTids.remove(tid);
+
+                                // We create a new group and we begin the DFS
+                                groupedTids.add(new LinkedList<>());
+                                DFS(tid, groupedTids, remainingTids);
+                            }
+
+                            return groupedTids;
+                        }
+
+                        // Depth first search
+                        private void DFS(Integer tid, LinkedList<List<Integer>> groupedTids, Set<Integer> remainingTids) {
+                            Integer tidPos = tidToPos.getOrDefault(tid, -1);
+                            assert(tidPos != -1);
+
+                            // We visit each tid we have not see yet
+                            for (Integer adjTid : adj[tidPos]) {
+                                if (remainingTids.contains(adjTid)) {
+                                    remainingTids.remove(adjTid);
+                                    DFS(adjTid, groupedTids, remainingTids);
+                                }
+                            }
+
+                            // We compute the current node
+                            groupedTids.getLast().add(tid);
+                        }
+                    }
+
+                    // "edges" contains the count of every arrows between two tids (Pair<Integer, Integer>). For
+                    // constructing the Pair, we always put the smallest tid first
+                    Map<Pair<Integer, Integer>, Integer> edges = new HashMap<>();
+                    // This method only returns the arrows in the current time interval [a,b] of ControlFlowView. Thus,
+                    // we only optimize for that time interval
+                    List<ILinkEvent> arrows = getTimeGraphViewer().getTimeGraphControl().getArrows();
+                    // We iterate in arrows to count the number of transitions between every tids
+                    for (ILinkEvent arrow : arrows) {
+                        ControlFlowEntry from = (ControlFlowEntry)arrow.getEntry();
+                        ControlFlowEntry to = (ControlFlowEntry)arrow.getDestinationEntry();
+                        int fromTid = from.getThreadId();
+                        int toTid   = to.getThreadId();
+                        if (fromTid != toTid) {
+                            Pair<Integer, Integer> key = new Pair<>(Math.min(fromTid, toTid), Math.max(fromTid, toTid));
+                            Integer count = edges.getOrDefault(key, 0);
+                            edges.put(key, count + 1);
+                        }
+                    }
+
+                    // We sort the edges on the transition count (in decreasing order) for the greedy algorithm
+                    List<Pair<Integer, Integer>> sortedEdges = edges
+                            .entrySet()
+                            .stream()
+                            .sorted(Map.Entry.<Pair<Integer, Integer>, Integer> comparingByValue().reversed()).map(Map.Entry::getKey)
+                            .collect(Collectors.toList());
+
+                    AdjacencyLists adjacency = new AdjacencyLists(sortedEdges);
+                    List<List<Integer>> groupedTids = adjacency.getGroupedTids();
+
+                    // We assign the starting position of each group
+                    int numberOfGroups = groupedTids.size();
+                    Integer startingPosOfGroup[] = new Integer[numberOfGroups];
+                    int pos = 0;
+                    for (int i=0; i<numberOfGroups; i++) {
+                        startingPosOfGroup[i] = pos;
+                        pos += groupedTids.get(i).size();
+                    }
+
+                    // We map each thread to its group
+                    Map<Integer, Integer> tidToGroup = new HashMap<>();
+                    int g = 0;
+                    for (List<Integer> group : groupedTids) {
+                        for (Integer tid : group) {
+                            tidToGroup.put(tid, g);
+                        }
+                        g++;
+                    }
+
+                    List<Integer> outList[] = new ArrayList[numberOfGroups];
+                    for (int i=0; i<numberOfGroups; i++) {
+                        outList[i] = new ArrayList<>();
+                    }
+                    for (Pair<Integer, Integer> edge : sortedEdges) {
+                        int fromTid = edge.getFirst();
+                        int toTid = edge.getSecond();
+                        int group = tidToGroup.getOrDefault(fromTid, -1);
+                        assert(group != -1 );
+                        if (!outList[group].contains(fromTid)) {
+                            outList[group].add(fromTid);
+                        }
+
+                        if (!outList[group].contains(toTid)) {
+                            outList[group].add(toTid);
+                        }
+                    }
+
+                    final ITmfStateSystem ss = TmfStateSystemAnalysisModule.getStateSystem(getTrace(), KernelAnalysisModule.ID);
+                    List<TimeGraphEntry> currentList = getEntryList(ss);
+                    for (TimeGraphEntry entry : currentList) {
+                        ControlFlowEntry cEntry = (ControlFlowEntry)entry;
+                        int tid = cEntry.getThreadId();
+                        int group = tidToGroup.getOrDefault(tid, -1);
+                        if (group != -1){
+                            int startingPos = startingPosOfGroup[group];
+                            cEntry.setSchedulingPosition(outList[group].indexOf(tid) + startingPos);
+                        } else {
+                            cEntry.setSchedulingPosition(Long.MAX_VALUE);
+                        }
+                    }
+
+                    setEntryComparator(ControlFlowColumnComparators.SCHEDULING_COLUMN_COMPARATOR);
+                    createFlatList();
+                    refresh();
+
+                }
+            };
+
+            fOptimizationAction.setText(Messages.ControlFlowView_optimizeLabel);
+            fOptimizationAction.setToolTipText(Messages.ControlFlowView_optimizeToolTip);
+            fOptimizationAction.setImageDescriptor(Activator.getDefault().getImageDescripterFromPath(IControlflowImageConstants.IMG_UI_OPTIMIZE));
+        }
+        return fOptimizationAction;
+    }
+
+    @Override
+    protected void fillLocalMenu(IMenuManager manager) {
+        super.fillLocalMenu(manager);
+        fItem = new MenuManager(Messages.ControlFlowView_threadPresentation);
+        IAction flatAction = createFlatAction();
+        fItem.add(flatAction);
+
+        fItem.add(createHierarchicalAction());
+        manager.add(fItem);
+
+    }
+
+    private IAction createHierarchicalAction() {
+        IAction action = new Action(Messages.ControlFlowView_hierarchicalViewLabel, IAction.AS_RADIO_BUTTON) {
+            @Override
+            public void run() {
+                if (fIsFlatViewClicked) {
+                    setTraceEntryChildren(fHierarchicalList);
+                    fIsFlatViewClicked = false;
+                }
+            }
+        };
+        action.setChecked(true);
+        action.setToolTipText(Messages.ControlFlowView_hierarchicalViewToolTip);
+        action.setImageDescriptor(Activator.getDefault().getImageDescripterFromPath(IControlflowImageConstants.IMG_UI_HIERARCHICAL_VIEW));
+        return action;
+    }
+
+    private IAction createFlatAction() {
+        IAction action = new Action(Messages.ControlFlowView_flatViewLabel, IAction.AS_RADIO_BUTTON) {
+            @Override
+            public void run() {
+                createFlatList();
+            }
+        };
+        action.setToolTipText(Messages.ControlFlowView_flatViewToolTip);
+        action.setImageDescriptor(Activator.getDefault().getImageDescripterFromPath(IControlflowImageConstants.IMG_UI_FLAT_VIEW));
+        return action;
+    }
+    private void createFlatList(){
+        if (!fIsFlatViewClicked) {
+            setTraceEntryChildren(fFlatList);
+            fIsFlatViewClicked = true;
+        }
     }
 
     @Override
@@ -237,6 +498,8 @@ public class ControlFlowView extends AbstractStateSystemTimeGraphView {
                 return Utils.formatTime(entry.getStartTime(), TimeFormat.CALENDAR, Resolution.NANOSEC);
             } else if (COLUMN_NAMES[columnIndex].equals(Messages.ControlFlowView_traceColumn)) {
                 return entry.getTrace().getName();
+            } else if (COLUMN_NAMES[columnIndex].equals(INVISIBLE_COLUMN)) {
+                return Long.toString(entry.getSchedulingPosition());
             }
             return ""; //$NON-NLS-1$
         }
@@ -271,7 +534,12 @@ public class ControlFlowView extends AbstractStateSystemTimeGraphView {
         }
 
         final List<ControlFlowEntry> entryList = new ArrayList<>();
+        final List<ControlFlowEntry> flatEntryList = new ArrayList<>();
+        fFlatList = new ArrayList<>();
+        fHierarchicalList = new ArrayList<>();
+
         final Map<Integer, ControlFlowEntry> entryMap = new HashMap<>();
+        final Map<Integer, ControlFlowEntry> flatEntryMap = new HashMap<>();
 
         long start = ssq.getStartTime();
         setStartTime(Math.min(getStartTime(), start));
@@ -295,6 +563,24 @@ public class ControlFlowView extends AbstractStateSystemTimeGraphView {
             final long qStart = start;
             final long qEnd = end;
             queryFullStates(ssq, qStart, qEnd, resolution, monitor, new IQueryHandler() {
+                private void handleControlFlowEntry(int threadQuark, String execName, int threadId, int ppid, long startTime, long endTime,
+                        Map<Integer, ControlFlowEntry> controlFlowEntryMap, List<ControlFlowEntry> controlFlowEntryList) {
+                    ControlFlowEntry entry = controlFlowEntryMap.get(threadId);
+                    if (entry == null) {
+                        entry = new ControlFlowEntry(threadQuark, trace, execName, threadId, ppid, startTime, endTime);
+                        controlFlowEntryList.add(entry);
+                        controlFlowEntryMap.put(threadId, entry);
+                    } else {
+                        /*
+                         * Update the name of the entry to the latest execName
+                         * and the parent thread id to the latest ppid.
+                         */
+                        entry.setName(execName);
+                        entry.setParentThreadId(ppid);
+                        entry.updateEndTime(endTime);
+                    }
+                }
+
                 @Override
                 public void handle(List<List<ITmfStateInterval>> fullStates, List<ITmfStateInterval> prevFullState) {
                     for (int threadQuark : threadQuarks) {
@@ -358,21 +644,8 @@ public class ControlFlowView extends AbstractStateSystemTimeGraphView {
                                     execNameInterval.getStateValue().getType() == ITmfStateValue.Type.STRING) {
                                 String execName = execNameInterval.getStateValue().unboxStr();
                                 int ppid = ppidInterval.getStateValue().unboxInt();
-                                ControlFlowEntry entry = entryMap.get(threadId);
-                                if (entry == null) {
-                                    entry = new ControlFlowEntry(threadQuark, trace, execName, threadId, ppid, startTime, endTime);
-                                    entryList.add(entry);
-                                    entryMap.put(threadId, entry);
-                                } else {
-                                    /*
-                                     * Update the name of the entry to the
-                                     * latest execName and the parent thread id
-                                     * to the latest ppid.
-                                     */
-                                    entry.setName(execName);
-                                    entry.setParentThreadId(ppid);
-                                    entry.updateEndTime(endTime);
-                                }
+                                handleControlFlowEntry(threadQuark, execName, threadId, ppid, startTime, endTime, entryMap, entryList);
+                                handleControlFlowEntry(threadQuark, execName, threadId, ppid, startTime, endTime, flatEntryMap, flatEntryList);
                             }
                             if (isNull) {
                                 entryMap.remove(threadId);
@@ -382,6 +655,7 @@ public class ControlFlowView extends AbstractStateSystemTimeGraphView {
                             lastPpidStartTime = ppidInterval.getStartTime();
                         }
                     }
+                    constructFlatTree(flatEntryList);
                     updateTree(entryList, parentTrace, ssq);
 
                     for (final TimeGraphEntry entry : getEntryList(ssq)) {
@@ -398,6 +672,39 @@ public class ControlFlowView extends AbstractStateSystemTimeGraphView {
             }
 
             start = end;
+        }
+    }
+
+    /**
+     * the purpose of this method is to set the children of a trace entry with the list newChildren.
+     *
+     * @param newChildren
+     *                   A list of entries to use as the children of the trace entry
+     */
+    private void setTraceEntryChildren(List<TimeGraphEntry> newChildren) {
+        ITmfTrace trace = getTrace();
+        if (trace == null) {
+            return;
+        }
+
+        final ITmfStateSystem ss = TmfStateSystemAnalysisModule.getStateSystem(trace, KernelAnalysisModule.ID);
+
+        removeFromEntryList(trace, ss, getEntryList(ss));
+        addToEntryList(trace, ss, newChildren);
+
+        refresh();
+    }
+
+    /**
+     * This method is called by buildEventList. Its purpose is to construct a
+     * flat list in parallel with the hierarchical list constructed in
+     * updateTree.
+     */
+    private void constructFlatTree(List<ControlFlowEntry> entryList) {
+        for (ControlFlowEntry entry : entryList) {
+            if (!fFlatList.contains(entry)) {
+                fFlatList.add(entry);
+            }
         }
     }
 
@@ -432,11 +739,13 @@ public class ControlFlowView extends AbstractStateSystemTimeGraphView {
             }
             if (root && (rootList == null || !rootList.contains(entry))) {
                 rootListToAdd.add(entry);
+                fHierarchicalList.add(entry);
             }
         }
 
         addToEntryList(parentTrace, ss, rootListToAdd);
         removeFromEntryList(parentTrace, ss, rootListToRemove);
+        fHierarchicalList.remove(rootListToRemove);
     }
 
     private void buildStatusEvents(ITmfTrace trace, ITmfTrace parentTrace, ITmfStateSystem ss, @NonNull List<List<ITmfStateInterval>> fullStates,
