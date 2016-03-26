@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<component id="org.eclipse.tracecompass.analysis.timing.ui" modificationStamp="751" version="1.2">
+    <package visibility="1">
+        <fragment handle="=org.eclipse.tracecompass.analysis.timing.ui/src&lt;org.eclipse.tracecompass.analysis.timing.ui.views.segmentstore"/>
+        <type handle="=org.eclipse.tracecompass.analysis.timing.ui/src&lt;org.eclipse.tracecompass.analysis.timing.ui.views.segmentstore{SubSecondTimeWithUnitFormat.java[SubSecondTimeWithUnitFormat" modificationStamp="769" restrictions="0" visibility="0"/>
+        <type handle="=org.eclipse.tracecompass.analysis.timing.ui/src&lt;org.eclipse.tracecompass.analysis.timing.ui.views.segmentstore{package-info.java[package-info" modificationStamp="771" restrictions="0" visibility="0"/>
+        <type handle="=org.eclipse.tracecompass.analysis.timing.ui/src&lt;org.eclipse.tracecompass.analysis.timing.ui.views.segmentstore{AnalysisTimingImageConstants.java[AnalysisTimingImageConstants" modificationStamp="768" restrictions="2" visibility="0"/>
+    </package>
+    <package visibility="1">
+        <fragment handle="=org.eclipse.tracecompass.analysis.timing.ui/src&lt;org.eclipse.tracecompass.analysis.timing.ui.views.segmentstore.scatter"/>
+        <type handle="=org.eclipse.tracecompass.analysis.timing.ui/src&lt;org.eclipse.tracecompass.analysis.timing.ui.views.segmentstore.scatter{AbstractSegmentStoreScatterGraphViewer.java[AbstractSegmentStoreScatterGraphViewer" modificationStamp="784" restrictions="0" visibility="0"/>
+        <type handle="=org.eclipse.tracecompass.analysis.timing.ui/src&lt;org.eclipse.tracecompass.analysis.timing.ui.views.segmentstore.scatter{package-info.java[package-info" modificationStamp="783" restrictions="0" visibility="0"/>
+    </package>
+    <package visibility="1">
+        <fragment handle="=org.eclipse.tracecompass.analysis.timing.ui/src&lt;org.eclipse.tracecompass.analysis.timing.ui.views.segmentstore.table"/>
+        <type handle="=org.eclipse.tracecompass.analysis.timing.ui/src&lt;org.eclipse.tracecompass.analysis.timing.ui.views.segmentstore.table{AbstractSegmentStoreTableView.java[AbstractSegmentStoreTableView" modificationStamp="785" restrictions="0" visibility="0"/>
+        <type handle="=org.eclipse.tracecompass.analysis.timing.ui/src&lt;org.eclipse.tracecompass.analysis.timing.ui.views.segmentstore.table{package-info.java[package-info" modificationStamp="786" restrictions="0" visibility="0"/>
+        <type handle="=org.eclipse.tracecompass.analysis.timing.ui/src&lt;org.eclipse.tracecompass.analysis.timing.ui.views.segmentstore.table{AbstractSegmentStoreTableViewer.java[AbstractSegmentStoreTableViewer" modificationStamp="786" restrictions="0" visibility="0"/>
+    </package>
+    <package visibility="1">
+        <fragment handle="=org.eclipse.tracecompass.analysis.timing.ui/src&lt;org.eclipse.tracecompass.internal.analysis.timing.ui"/>
+        <type handle="=org.eclipse.tracecompass.analysis.timing.ui/src&lt;org.eclipse.tracecompass.internal.analysis.timing.ui{Activator.java[Activator" modificationStamp="766" restrictions="0" visibility="0"/>
+    </package>
+    <package visibility="1">
+        <fragment handle="=org.eclipse.tracecompass.analysis.timing.ui/src&lt;org.eclipse.tracecompass.internal.analysis.timing.ui.views.segmentstore.density"/>
+        <type handle="=org.eclipse.tracecompass.analysis.timing.ui/src&lt;org.eclipse.tracecompass.internal.analysis.timing.ui.views.segmentstore.density{BaseMouseProvider.java[BaseMouseProvider" modificationStamp="791" restrictions="0" visibility="0"/>
+        <type handle="=org.eclipse.tracecompass.analysis.timing.ui/src&lt;org.eclipse.tracecompass.internal.analysis.timing.ui.views.segmentstore.density{MouseDragZoomProvider.java[MouseDragZoomProvider" modificationStamp="793" restrictions="0" visibility="0"/>
+        <type handle="=org.eclipse.tracecompass.analysis.timing.ui/src&lt;org.eclipse.tracecompass.internal.analysis.timing.ui.views.segmentstore.density{SimpleTooltipProvider.java[SimpleTooltipProvider" modificationStamp="795" restrictions="0" visibility="0"/>
+        <type handle="=org.eclipse.tracecompass.analysis.timing.ui/src&lt;org.eclipse.tracecompass.internal.analysis.timing.ui.views.segmentstore.density{Messages.java[Messages" modificationStamp="792" restrictions="0" visibility="0"/>
+        <type handle="=org.eclipse.tracecompass.analysis.timing.ui/src&lt;org.eclipse.tracecompass.internal.analysis.timing.ui.views.segmentstore.density{MouseSelectionProvider.java[MouseSelectionProvider" modificationStamp="794" restrictions="0" visibility="0"/>
+    </package>
+    <package visibility="1">
+        <fragment handle="=org.eclipse.tracecompass.analysis.timing.ui/src&lt;org.eclipse.tracecompass.analysis.timing.ui.views.segmentstore.density"/>
+        <type handle="=org.eclipse.tracecompass.analysis.timing.ui/src&lt;org.eclipse.tracecompass.analysis.timing.ui.views.segmentstore.density{Messages.java[Messages" modificationStamp="778" restrictions="0" visibility="0"/>
+        <type handle="=org.eclipse.tracecompass.analysis.timing.ui/src&lt;org.eclipse.tracecompass.analysis.timing.ui.views.segmentstore.density{ZoomOutAction.java[ZoomOutAction" modificationStamp="779" restrictions="0" visibility="0"/>
+        <type handle="=org.eclipse.tracecompass.analysis.timing.ui/src&lt;org.eclipse.tracecompass.analysis.timing.ui.views.segmentstore.density{ISegmentStoreDensityViewerDataListener.java[ISegmentStoreDensityViewerDataListener" modificationStamp="777" restrictions="0" visibility="0"/>
+        <type handle="=org.eclipse.tracecompass.analysis.timing.ui/src&lt;org.eclipse.tracecompass.analysis.timing.ui.views.segmentstore.density{AbstractSegmentStoreDensityViewer.java[AbstractSegmentStoreDensityViewer" modificationStamp="777" restrictions="0" visibility="0"/>
+        <type handle="=org.eclipse.tracecompass.analysis.timing.ui/src&lt;org.eclipse.tracecompass.analysis.timing.ui.views.segmentstore.density{package-info.java[package-info" modificationStamp="781" restrictions="0" visibility="0"/>
+        <type handle="=org.eclipse.tracecompass.analysis.timing.ui/src&lt;org.eclipse.tracecompass.analysis.timing.ui.views.segmentstore.density{AbstractSegmentStoreDensityView.java[AbstractSegmentStoreDensityView" modificationStamp="775" restrictions="0" visibility="0"/>
+    </package>
+    <package visibility="1">
+        <fragment handle="=org.eclipse.tracecompass.analysis.timing.ui/src&lt;org.eclipse.tracecompass.internal.analysis.timing.ui.views.segmentstore.scatter"/>
+        <type handle="=org.eclipse.tracecompass.analysis.timing.ui/src&lt;org.eclipse.tracecompass.internal.analysis.timing.ui.views.segmentstore.scatter{SegmentStoreScatterGraphTooltipProvider.java[SegmentStoreScatterGraphTooltipProvider" modificationStamp="799" restrictions="0" visibility="0"/>
+        <type handle="=org.eclipse.tracecompass.analysis.timing.ui/src&lt;org.eclipse.tracecompass.internal.analysis.timing.ui.views.segmentstore.scatter{package-info.java[package-info" modificationStamp="800" restrictions="0" visibility="0"/>
+        <type handle="=org.eclipse.tracecompass.analysis.timing.ui/src&lt;org.eclipse.tracecompass.internal.analysis.timing.ui.views.segmentstore.scatter{Messages.java[Messages" modificationStamp="797" restrictions="0" visibility="0"/>
+    </package>
+    <package visibility="1">
+        <fragment handle="=org.eclipse.tracecompass.analysis.timing.ui/src&lt;org.eclipse.tracecompass.internal.analysis.timing.ui.views.segmentstore.table"/>
+        <type handle="=org.eclipse.tracecompass.analysis.timing.ui/src&lt;org.eclipse.tracecompass.internal.analysis.timing.ui.views.segmentstore.table{package-info.java[package-info" modificationStamp="809" restrictions="0" visibility="0"/>
+        <type handle="=org.eclipse.tracecompass.analysis.timing.ui/src&lt;org.eclipse.tracecompass.internal.analysis.timing.ui.views.segmentstore.table{SegmentStoreContentProvider.java[SegmentStoreContentProvider" modificationStamp="807" restrictions="0" visibility="0"/>
+        <type handle="=org.eclipse.tracecompass.analysis.timing.ui/src&lt;org.eclipse.tracecompass.internal.analysis.timing.ui.views.segmentstore.table{Messages.java[Messages" modificationStamp="806" restrictions="0" visibility="0"/>
+    </package>
+</component>

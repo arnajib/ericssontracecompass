@@ -19,6 +19,7 @@ package org.eclipse.tracecompass.analysis.os.linux.ui.views.controlflow;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -47,6 +48,7 @@ import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.TreeItem;
 import org.eclipse.tracecompass.analysis.os.linux.core.kernel.Attributes;
 import org.eclipse.tracecompass.analysis.os.linux.core.kernel.KernelAnalysisModule;
+import org.eclipse.tracecompass.analysis.os.linux.core.kernel.KernelThreadInformationProvider;
 import org.eclipse.tracecompass.internal.analysis.os.linux.ui.Activator;
 import org.eclipse.tracecompass.internal.analysis.os.linux.ui.IControlflowImageConstants;
 import org.eclipse.tracecompass.internal.analysis.os.linux.ui.Messages;
@@ -62,6 +64,7 @@ import org.eclipse.tracecompass.statesystem.core.statevalue.ITmfStateValue;
 import org.eclipse.tracecompass.tmf.core.statesystem.TmfStateSystemAnalysisModule;
 import org.eclipse.tracecompass.tmf.core.trace.ITmfTrace;
 import org.eclipse.tracecompass.tmf.core.trace.TmfTraceManager;
+import org.eclipse.tracecompass.tmf.core.trace.TmfTraceUtils;
 import org.eclipse.tracecompass.tmf.core.util.Pair;
 import org.eclipse.tracecompass.tmf.ui.views.timegraph.AbstractStateSystemTimeGraphView;
 import org.eclipse.tracecompass.tmf.ui.widgets.timegraph.TimeGraphCombo;
@@ -130,11 +133,8 @@ public class ControlFlowView extends AbstractStateSystemTimeGraphView {
 
     static {
         ImmutableList.Builder<Comparator<ITimeGraphEntry>> builder = ImmutableList.builder();
-        builder.add(ControlFlowColumnComparators.PROCESS_NAME_COLUMN_COMPARATOR)
-            .add(ControlFlowColumnComparators.TID_COLUMN_COMPARATOR)
-            .add(ControlFlowColumnComparators.PTID_COLUMN_COMPARATOR)
-            .add(ControlFlowColumnComparators.BIRTH_TIME_COLUMN_COMPARATOR)
-            .add(ControlFlowColumnComparators.TRACE_COLUMN_COMPARATOR);
+        builder.add(ControlFlowColumnComparators.PROCESS_NAME_COLUMN_COMPARATOR).add(ControlFlowColumnComparators.TID_COLUMN_COMPARATOR).add(ControlFlowColumnComparators.PTID_COLUMN_COMPARATOR).add(
+                ControlFlowColumnComparators.BIRTH_TIME_COLUMN_COMPARATOR).add(ControlFlowColumnComparators.TRACE_COLUMN_COMPARATOR);
         List<Comparator<ITimeGraphEntry>> l = builder.build();
         COLUMN_COMPARATORS = l.toArray(new Comparator[l.size()]);
     }
@@ -232,20 +232,23 @@ public class ControlFlowView extends AbstractStateSystemTimeGraphView {
                 public void runWithEvent(Event event) {
                     // Representation for the transition graph between tids
                     class AdjacencyLists {
-                        // Map of every thread to its position its the adjacency list
+                        // Map of every thread to its position its the adjacency
+                        // list
                         Map<Integer, Integer> tidToPos;
                         Set<Integer> tids;
                         List<Integer>[] adj;
 
                         public AdjacencyLists(List<Pair<Integer, Integer>> edges) {
-                            // We begin by constructing tidToPos. We will need it for constructing adj.
-                            // We also construct tids. We will need it for the grouping algorithm
+                            // We begin by constructing tidToPos. We will need
+                            // it for constructing adj.
+                            // We also construct tids. We will need it for the
+                            // grouping algorithm
                             tidToPos = new HashMap<>();
                             tids = new TreeSet<>();
                             int pos = 0;
                             for (Pair<Integer, Integer> edge : edges) {
                                 int fromTid = edge.getFirst();
-                                int toTid   = edge.getSecond();
+                                int toTid = edge.getSecond();
                                 tids.add(fromTid);
                                 tids.add(toTid);
                                 if (!tidToPos.containsKey(fromTid)) {
@@ -261,7 +264,7 @@ public class ControlFlowView extends AbstractStateSystemTimeGraphView {
                             // We now insert every edge in the adjacency list
                             int nVertices = tidToPos.size();
                             adj = new List[nVertices];
-                            for (int i=0; i<nVertices; i++) {
+                            for (int i = 0; i < nVertices; i++) {
                                 adj[i] = new ArrayList<>();
                             }
                             for (Pair<Integer, Integer> edge : edges) {
@@ -269,11 +272,13 @@ public class ControlFlowView extends AbstractStateSystemTimeGraphView {
                                 int toTid = edge.getSecond();
                                 int fromTidPos = tidToPos.getOrDefault(fromTid, -1);
                                 int toTidPos = tidToPos.getOrDefault(toTid, -1);
-                                assert(fromTidPos != -1 && toTidPos != -1);
+                                assert (fromTidPos != -1 && toTidPos != -1);
 
-                                assert(!adj[fromTidPos].contains(toTid)); //CHECKUP TEMPORAIRE
+                                assert (!adj[fromTidPos].contains(toTid)); // CHECKUP
+                                                                           // TEMPORAIRE
                                 adj[fromTidPos].add(toTid);
-                                assert(!adj[toTidPos].contains(fromTid)); //CHECKUP TEMPORAIRE
+                                assert (!adj[toTidPos].contains(fromTid)); // CHECKUP
+                                                                           // TEMPORAIRE
                                 adj[toTidPos].add(fromTid);
                             }
                         }
@@ -282,9 +287,10 @@ public class ControlFlowView extends AbstractStateSystemTimeGraphView {
                             TreeSet<Integer> remainingTids = new TreeSet<>(tids);
                             LinkedList<List<Integer>> groupedTids = new LinkedList<>();
 
-
-                            // Each time we exit DFS, it means we completly visited a subgraph.
-                            // If remainingTids is not empty, there are subgraph left to visit
+                            // Each time we exit DFS, it means we completly
+                            // visited a subgraph.
+                            // If remainingTids is not empty, there are subgraph
+                            // left to visit
                             while (!remainingTids.isEmpty()) {
                                 // tid to initialize the DFS
                                 Integer tid = remainingTids.first();
@@ -301,7 +307,7 @@ public class ControlFlowView extends AbstractStateSystemTimeGraphView {
                         // Depth first search
                         private void DFS(Integer tid, LinkedList<List<Integer>> groupedTids, Set<Integer> remainingTids) {
                             Integer tidPos = tidToPos.getOrDefault(tid, -1);
-                            assert(tidPos != -1);
+                            assert (tidPos != -1);
 
                             // We visit each tid we have not see yet
                             for (Integer adjTid : adj[tidPos]) {
@@ -316,31 +322,76 @@ public class ControlFlowView extends AbstractStateSystemTimeGraphView {
                         }
                     }
 
-                    // "edges" contains the count of every arrows between two tids (Pair<Integer, Integer>). For
-                    // constructing the Pair, we always put the smallest tid first
+                    // "edges" contains the count of every arrows between two
+                    // tids (Pair<Integer, Integer>). For
+                    // constructing the Pair, we always put the smallest tid
+                    // first
                     Map<Pair<Integer, Integer>, Integer> edges = new HashMap<>();
-                    // This method only returns the arrows in the current time interval [a,b] of ControlFlowView. Thus,
+                    // This method only returns the arrows in the current time
+                    // interval [a,b] of ControlFlowView. Thus,
                     // we only optimize for that time interval
                     List<ILinkEvent> arrows = getTimeGraphViewer().getTimeGraphControl().getArrows();
-                    // We iterate in arrows to count the number of transitions between every tids
+                    KernelAnalysisModule module = TmfTraceUtils.getAnalysisModuleOfClass(getTrace(), KernelAnalysisModule.class, KernelAnalysisModule.ID);
+                    // We iterate in arrows to count the number of transitions
+                    // between every tids
                     for (ILinkEvent arrow : arrows) {
-                        ControlFlowEntry from = (ControlFlowEntry)arrow.getEntry();
-                        ControlFlowEntry to = (ControlFlowEntry)arrow.getDestinationEntry();
+                        ControlFlowEntry from = (ControlFlowEntry) arrow.getEntry();
+                        ControlFlowEntry to = (ControlFlowEntry) arrow.getDestinationEntry();
+
                         int fromTid = from.getThreadId();
-                        int toTid   = to.getThreadId();
+                        int toTid = to.getThreadId();
+
                         if (fromTid != toTid) {
+                            //////////////////////////////////////
+                            Boolean trouvefrom = false;
+                            Boolean trouveto = false;
+                            Set<Integer> threadsss = new HashSet();
+                            for (long cpn = 0L; cpn < 4; cpn++) {
+                                Integer fromCpu = KernelThreadInformationProvider.getThreadOnCpu(module, cpn, arrow.getTime());
+                                Integer toCpu = KernelThreadInformationProvider.getThreadOnCpu(module, cpn, arrow.getTime() + arrow.getDuration());
+
+                                if (fromCpu != null && fromCpu == fromTid) {
+                                    trouvefrom = true;
+                                    if(!threadsss.contains(fromCpu)) {
+                                        threadsss.add(fromCpu);
+                                    }
+                                }
+                                if (toCpu != null && toCpu == toTid) {
+                                    // System.out.println(fromCpu);
+                                    // System.out.println(toCpu);
+                                    if(!threadsss.contains(toCpu)) {
+                                        threadsss.add(toCpu);
+                                    }
+                                    trouveto = true;
+                                }
+                            }
+
+                            if (trouvefrom) {
+                                // System.out.println("On a trouve from!!!!!");
+                            } else {
+                                // System.out.println("On a pas trouve
+                                // from......");
+                            }
+                            if (trouveto) {
+                                // System.out.println("On a trouve to!!!!!");
+                            } else {
+                                // System.out.println("On a pas trouve
+                                // to......");
+                            }
+                            for (Integer item : threadsss) {
+                                System.out.println( item.toString() );
+
+                            }
+                            ////////////////////////////////////
                             Pair<Integer, Integer> key = new Pair<>(Math.min(fromTid, toTid), Math.max(fromTid, toTid));
                             Integer count = edges.getOrDefault(key, 0);
                             edges.put(key, count + 1);
                         }
                     }
 
-                    // We sort the edges on the transition count (in decreasing order) for the greedy algorithm
-                    List<Pair<Integer, Integer>> sortedEdges = edges
-                            .entrySet()
-                            .stream()
-                            .sorted(Map.Entry.<Pair<Integer, Integer>, Integer> comparingByValue().reversed()).map(Map.Entry::getKey)
-                            .collect(Collectors.toList());
+                    // We sort the edges on the transition count (in decreasing
+                    // order) for the greedy algorithm
+                    List<Pair<Integer, Integer>> sortedEdges = edges.entrySet().stream().sorted(Map.Entry.<Pair<Integer, Integer>, Integer> comparingByValue().reversed()).map(Map.Entry::getKey).collect(Collectors.toList());
 
                     AdjacencyLists adjacency = new AdjacencyLists(sortedEdges);
                     List<List<Integer>> groupedTids = adjacency.getGroupedTids();
@@ -349,7 +400,7 @@ public class ControlFlowView extends AbstractStateSystemTimeGraphView {
                     int numberOfGroups = groupedTids.size();
                     Integer startingPosOfGroup[] = new Integer[numberOfGroups];
                     int pos = 0;
-                    for (int i=0; i<numberOfGroups; i++) {
+                    for (int i = 0; i < numberOfGroups; i++) {
                         startingPosOfGroup[i] = pos;
                         pos += groupedTids.get(i).size();
                     }
@@ -365,14 +416,14 @@ public class ControlFlowView extends AbstractStateSystemTimeGraphView {
                     }
 
                     List<Integer> outList[] = new ArrayList[numberOfGroups];
-                    for (int i=0; i<numberOfGroups; i++) {
+                    for (int i = 0; i < numberOfGroups; i++) {
                         outList[i] = new ArrayList<>();
                     }
                     for (Pair<Integer, Integer> edge : sortedEdges) {
                         int fromTid = edge.getFirst();
                         int toTid = edge.getSecond();
                         int group = tidToGroup.getOrDefault(fromTid, -1);
-                        assert(group != -1 );
+                        assert (group != -1);
                         if (!outList[group].contains(fromTid)) {
                             outList[group].add(fromTid);
                         }
@@ -383,12 +434,13 @@ public class ControlFlowView extends AbstractStateSystemTimeGraphView {
                     }
 
                     final ITmfStateSystem ss = TmfStateSystemAnalysisModule.getStateSystem(getTrace(), KernelAnalysisModule.ID);
+
                     List<TimeGraphEntry> currentList = getEntryList(ss);
                     for (TimeGraphEntry entry : currentList) {
-                        ControlFlowEntry cEntry = (ControlFlowEntry)entry;
+                        ControlFlowEntry cEntry = (ControlFlowEntry) entry;
                         int tid = cEntry.getThreadId();
                         int group = tidToGroup.getOrDefault(tid, -1);
-                        if (group != -1){
+                        if (group != -1) {
                             int startingPos = startingPosOfGroup[group];
                             cEntry.setSchedulingPosition(outList[group].indexOf(tid) + startingPos);
                         } else {
@@ -449,7 +501,8 @@ public class ControlFlowView extends AbstractStateSystemTimeGraphView {
         action.setImageDescriptor(Activator.getDefault().getImageDescripterFromPath(IControlflowImageConstants.IMG_UI_FLAT_VIEW));
         return action;
     }
-    private void createFlatList(){
+
+    private void createFlatList() {
         if (!fIsFlatViewClicked) {
             setTraceEntryChildren(fFlatList);
             fIsFlatViewClicked = true;
@@ -554,7 +607,8 @@ public class ControlFlowView extends AbstractStateSystemTimeGraphView {
                 return;
             }
             long end = ssq.getCurrentEndTime();
-            if (start == end && !complete) { // when complete execute one last time regardless of end time
+            if (start == end && !complete) { // when complete execute one last
+                                             // time regardless of end time
                 continue;
             }
             final long resolution = Math.max(1, (end - ssq.getStartTime()) / getDisplayWidth());
@@ -591,7 +645,8 @@ public class ControlFlowView extends AbstractStateSystemTimeGraphView {
                         } catch (NumberFormatException e1) {
                             continue;
                         }
-                        if (threadId <= 0) { // ignore the 'unknown' (-1) and swapper (0) threads
+                        if (threadId <= 0) { // ignore the 'unknown' (-1) and
+                                             // swapper (0) threads
                             continue;
                         }
 
@@ -601,7 +656,10 @@ public class ControlFlowView extends AbstractStateSystemTimeGraphView {
                             execNameQuark = ssq.getQuarkRelative(threadQuark, Attributes.EXEC_NAME);
                             ppidQuark = ssq.getQuarkRelative(threadQuark, Attributes.PPID);
                         } catch (AttributeNotFoundException e) {
-                            /* No information on this thread (yet?), skip it for now */
+                            /*
+                             * No information on this thread (yet?), skip it for
+                             * now
+                             */
                             continue;
                         }
                         ITmfStateInterval lastExecNameInterval = prevFullState == null || execNameQuark >= prevFullState.size() ? null : prevFullState.get(execNameQuark);
@@ -613,7 +671,10 @@ public class ControlFlowView extends AbstractStateSystemTimeGraphView {
                                 return;
                             }
                             if (execNameQuark >= fullState.size() || ppidQuark >= fullState.size()) {
-                                /* No information on this thread (yet?), skip it for now */
+                                /*
+                                 * No information on this thread (yet?), skip it
+                                 * for now
+                                 */
                                 continue;
                             }
                             ITmfStateInterval execNameInterval = fullState.get(execNameQuark);
@@ -676,10 +737,11 @@ public class ControlFlowView extends AbstractStateSystemTimeGraphView {
     }
 
     /**
-     * the purpose of this method is to set the children of a trace entry with the list newChildren.
+     * the purpose of this method is to set the children of a trace entry with
+     * the list newChildren.
      *
      * @param newChildren
-     *                   A list of entries to use as the children of the trace entry
+     *            A list of entries to use as the children of the trace entry
      */
     private void setTraceEntryChildren(List<TimeGraphEntry> newChildren) {
         ITmfTrace trace = getTrace();
@@ -727,7 +789,7 @@ public class ControlFlowView extends AbstractStateSystemTimeGraphView {
                      */
                     if (parent.getThreadId() == entry.getParentThreadId() &&
                             !(entry.getStartTime() > parent.getEndTime() ||
-                            entry.getEndTime() < parent.getStartTime())) {
+                                    entry.getEndTime() < parent.getStartTime())) {
                         parent.addChild(entry);
                         root = false;
                         if (rootList != null && rootList.contains(entry)) {
@@ -941,7 +1003,8 @@ public class ControlFlowView extends AbstractStateSystemTimeGraphView {
                     }
                     long time = currentThreadInterval.getStartTime();
                     if (time != lastEnd) {
-                        // don't create links where there are gaps in intervals due to the resolution
+                        // don't create links where there are gaps in intervals
+                        // due to the resolution
                         prevThread = 0;
                         prevEnd = 0;
                     }

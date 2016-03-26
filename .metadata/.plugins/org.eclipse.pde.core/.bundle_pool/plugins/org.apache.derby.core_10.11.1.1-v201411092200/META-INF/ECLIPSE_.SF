@@ -1,0 +1,23 @@
+Signature-Version: 1.0
+SHA1-Digest-Manifest: E8tMIB1B2bFcM6ndDAogIiDLZCM=
+Created-By: 1.6.0 (IBM Corporation)
+SHA1-Digest-Manifest-Main-Attributes: jqaM//1NJq9/Xnu++oCS7cV56g4=
+
+Name: META-INF/eclipse.inf
+SHA1-Digest: 1ZeISQSdQ05/MZWjloGm3LwWYvk=
+
+Name: lib/derbyclient.jar
+SHA1-Digest: 7JLpwRDD5dIhJX0SkhFDOxeWYC0=
+
+Name: OSGI-INF/l10n/bundle.properties
+SHA1-Digest: p9U0KPM73nt7mT7lOQ47BphYfms=
+
+Name: lib/derbytools.jar
+SHA1-Digest: w2gHFib3eWdP1jh7OgvuELVbYf0=
+
+Name: lib/derby.jar
+SHA1-Digest: AJwb83On/ClahvHWRJXdYtoWXHk=
+
+Name: lib/derbynet.jar
+SHA1-Digest: KLvMezvSkw4VETFMSYe2A45sW20=
+

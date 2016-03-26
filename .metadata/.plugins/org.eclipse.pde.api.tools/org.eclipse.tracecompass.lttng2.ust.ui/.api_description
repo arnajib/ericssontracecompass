@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<component id="org.eclipse.tracecompass.lttng2.ust.ui" modificationStamp="3839" version="1.2">
+    <package visibility="1">
+        <fragment handle="=org.eclipse.tracecompass.lttng2.ust.ui/src&lt;org.eclipse.tracecompass.lttng2.ust.ui.analysis.callstack"/>
+        <type handle="=org.eclipse.tracecompass.lttng2.ust.ui/src&lt;org.eclipse.tracecompass.lttng2.ust.ui.analysis.callstack{LttngUstCallStackAnalysis.java[LttngUstCallStackAnalysis" modificationStamp="3859" restrictions="0" visibility="0"/>
+    </package>
+</component>

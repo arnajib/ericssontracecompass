@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<component id="org.eclipse.tracecompass.tmf.analysis.xml.ui" modificationStamp="5224" version="1.2">
+    <package visibility="1">
+        <fragment handle="=org.eclipse.tracecompass.tmf.analysis.xml.ui/src&lt;org.eclipse.tracecompass.tmf.analysis.xml.ui.module"/>
+        <type handle="=org.eclipse.tracecompass.tmf.analysis.xml.ui/src&lt;org.eclipse.tracecompass.tmf.analysis.xml.ui.module{TmfXmlLatencyViewOutput.java[TmfXmlLatencyViewOutput" modificationStamp="55620" restrictions="0" visibility="0"/>
+        <type handle="=org.eclipse.tracecompass.tmf.analysis.xml.ui/src&lt;org.eclipse.tracecompass.tmf.analysis.xml.ui.module{TmfXmlViewOutput.java[TmfXmlViewOutput" modificationStamp="5243" restrictions="0" visibility="0"/>
+        <type handle="=org.eclipse.tracecompass.tmf.analysis.xml.ui/src&lt;org.eclipse.tracecompass.tmf.analysis.xml.ui.module{TmfXmlAnalysisOutputSource.java[TmfXmlAnalysisOutputSource" modificationStamp="5243" restrictions="0" visibility="0"/>
+    </package>
+    <package visibility="1">
+        <fragment handle="=org.eclipse.tracecompass.tmf.analysis.xml.ui/src&lt;org.eclipse.tracecompass.tmf.analysis.xml.ui.views.timegraph"/>
+        <type handle="=org.eclipse.tracecompass.tmf.analysis.xml.ui/src&lt;org.eclipse.tracecompass.tmf.analysis.xml.ui.views.timegraph{XmlEntry.java[XmlEntry" modificationStamp="5252" restrictions="0" visibility="0"/>
+        <type handle="=org.eclipse.tracecompass.tmf.analysis.xml.ui/src&lt;org.eclipse.tracecompass.tmf.analysis.xml.ui.views.timegraph{XmlTimeGraphView.java[XmlTimeGraphView" modificationStamp="5254" restrictions="0" visibility="0"/>
+        <type handle="=org.eclipse.tracecompass.tmf.analysis.xml.ui/src&lt;org.eclipse.tracecompass.tmf.analysis.xml.ui.views.timegraph{Messages.java[Messages" modificationStamp="5251" restrictions="0" visibility="0"/>
+        <type handle="=org.eclipse.tracecompass.tmf.analysis.xml.ui/src&lt;org.eclipse.tracecompass.tmf.analysis.xml.ui.views.timegraph{XmlPresentationProvider.java[XmlPresentationProvider" modificationStamp="5253" restrictions="0" visibility="0"/>
+    </package>
+</component>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<component id="org.eclipse.tracecompass.lttng2.control.core" modificationStamp="4057" version="1.2">
+    <package visibility="1">
+        <fragment handle="=org.eclipse.tracecompass.lttng2.control.core/src&lt;org.eclipse.tracecompass.lttng2.control.core.session"/>
+        <type handle="=org.eclipse.tracecompass.lttng2.control.core/src&lt;org.eclipse.tracecompass.lttng2.control.core.session{SessionConfigStrings.java[SessionConfigStrings" modificationStamp="4074" restrictions="0" visibility="0"/>
+        <type handle="=org.eclipse.tracecompass.lttng2.control.core/src&lt;org.eclipse.tracecompass.lttng2.control.core.session{Messages.java[Messages" modificationStamp="4072" restrictions="0" visibility="0"/>
+        <type handle="=org.eclipse.tracecompass.lttng2.control.core/src&lt;org.eclipse.tracecompass.lttng2.control.core.session{SessionConfigGenerator.java[SessionConfigGenerator" modificationStamp="4073" restrictions="0" visibility="0"/>
+    </package>
+</component>

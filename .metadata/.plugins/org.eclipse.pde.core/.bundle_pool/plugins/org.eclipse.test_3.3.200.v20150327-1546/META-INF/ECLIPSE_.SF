@@ -1,0 +1,50 @@
+Signature-Version: 1.0
+SHA1-Digest-Manifest: yJf6hSpkID5SBAmQD3cDgxWebHU=
+Created-By: 1.6.0 (IBM Corporation)
+SHA1-Digest-Manifest-Main-Attributes: Gnod1fPVIhs2mAXjzoPj61caz8g=
+
+Name: org/eclipse/test/EclipseTestRunner$1$1.class
+SHA1-Digest: S7q3IMQFTkbZDyv9yZMQ/TotClE=
+
+Name: org/eclipse/test/UITestApplication$1$1.class
+SHA1-Digest: ckFC+ugzH17mYBvAx8YImnouczk=
+
+Name: org/eclipse/test/EclipseTestRunner$TestFailedException.class
+SHA1-Digest: K6dBfumcA17+PG5i0DZARGsFnc4=
+
+Name: org/eclipse/test/RegressionTest.class
+SHA1-Digest: yyWx8OlesWeUzqWn0ZPx7fzpSBQ=
+
+Name: org/eclipse/test/EclipseTestRunner.class
+SHA1-Digest: vsIMYxlKxGrRy4CTBafJCZ5oka4=
+
+Name: org/eclipse/test/UITestApplication.class
+SHA1-Digest: QauUssDHvkxyr1AdcEtZDCrPK6U=
+
+Name: org/eclipse/test/EclipseTestRunner$ThreadDump.class
+SHA1-Digest: Q4cNAjeDUU9a7aZCOvau2By5LcY=
+
+Name: plugin.properties
+SHA1-Digest: /hyrSNK6+Z1OFFULPWDgotVakfk=
+
+Name: org/eclipse/test/EclipseTestRunner$1.class
+SHA1-Digest: jabYDngUxqeu9cusLPI7W4XSYXY=
+
+Name: org/eclipse/test/UITestApplication$1.class
+SHA1-Digest: JhWGjceJ4hdx3T7wLrIQI4pGk9s=
+
+Name: org/eclipse/test/UITestApplication$2.class
+SHA1-Digest: MBYCv0LYsAbTAXhoSUlZy4ZiiWw=
+
+Name: lib/jacocoagent.jar
+SHA1-Digest: xsSaEepYR8OoUQww6cOsDlGYDqA=
+
+Name: lib/jacocoant.jar
+SHA1-Digest: U7MD/j10R/+I8fHTgNa/8TSS0as=
+
+Name: plugin.xml
+SHA1-Digest: xaD1OjUsW0h9hYOPA1IkO9wR9Ow=
+
+Name: org/eclipse/test/CoreTestApplication.class
+SHA1-Digest: wF+W2HO4Ivhket79X8PAiZwq+I0=
+

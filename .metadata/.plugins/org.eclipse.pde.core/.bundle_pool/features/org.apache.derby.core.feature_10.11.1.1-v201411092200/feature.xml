@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feature
+      id="org.apache.derby.core.feature"
+      label="Derby Core Feature"
+      version="10.11.1.1-v201411092200"
+      provider-name="Eclipse Releng"
+      
+      >
+
+   <description>
+      This Derby Core feature is for use with testing only. Not distribution.
+   </description>
+
+   <copyright>
+      [Enter Copyright Description here.]
+   </copyright>
+
+   <license url="%licenseURL">
+      %license
+   </license>
+
+   <plugin
+         id="org.apache.derby.core"
+         download-size="0"
+         install-size="0"
+         version="10.11.1.1-v201411092200"/>
+
+</feature>

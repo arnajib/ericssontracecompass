@@ -1,0 +1,66 @@
+Manifest-Version: 1.0
+Bundle-Localization: plugin
+Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Built-By: e4Build
+Bundle-SymbolicName: org.eclipse.test; singleton:=true
+Eclipse-SourceReferences: scm:git:git://git.eclipse.org/gitroot/platfo
+ rm/eclipse.platform.releng.git;path="bundles/org.eclipse.test";tag="I
+ 20150331-0800";commitId=7635d265d7cf526d07da93b206ce7765221cfaf1
+Require-Bundle: org.apache.ant,org.junit,org.eclipse.ui,org.eclipse.co
+ re.runtime,org.eclipse.ui.ide.application,org.eclipse.equinox.app
+Bundle-Version: 3.3.200.v20150327-1546
+Export-Package: org.eclipse.test
+Build-Jdk: 1.7.0_75
+Bundle-ActivationPolicy: lazy
+Bundle-Vendor: %providerName
+Bundle-Name: %pluginName
+Eclipse-BundleShape: dir
+Archiver-Version: Plexus Archiver
+Created-By: Apache Maven 3.1.1
+Bundle-ManifestVersion: 2
+
+Name: org/eclipse/test/EclipseTestRunner$1$1.class
+SHA1-Digest: 5g0dEZXqB2zayRN96aP2HRDHsUY=
+
+Name: org/eclipse/test/UITestApplication$1$1.class
+SHA1-Digest: bqYPasPPGt//NaBr2d28rt5fs1A=
+
+Name: org/eclipse/test/EclipseTestRunner$TestFailedException.class
+SHA1-Digest: WS+ZhB+/OsH+wjizb/LzZRcuFp8=
+
+Name: org/eclipse/test/RegressionTest.class
+SHA1-Digest: cspMFQ+R0NXQy487w0Zi6QWfMIs=
+
+Name: org/eclipse/test/EclipseTestRunner.class
+SHA1-Digest: jDh/z17/HEJDk0fjdz/uLOQ2Ivg=
+
+Name: org/eclipse/test/UITestApplication.class
+SHA1-Digest: Dc2BnGwcRz9EXzX+WNrBcatWMnk=
+
+Name: org/eclipse/test/EclipseTestRunner$ThreadDump.class
+SHA1-Digest: /JHwoFzcRl3JNW6LqIxhsRHEN7U=
+
+Name: plugin.properties
+SHA1-Digest: ujq63h7ZVU2ogbR2PvZcvPHLGos=
+
+Name: org/eclipse/test/EclipseTestRunner$1.class
+SHA1-Digest: 6QCMxv+W5mHXV75ezfdIBtu7pas=
+
+Name: org/eclipse/test/UITestApplication$1.class
+SHA1-Digest: /5YZ8QdBommWwCw2c71EJqNssLY=
+
+Name: org/eclipse/test/UITestApplication$2.class
+SHA1-Digest: p7aksvQ6bJCTHH0Vyi7K5cbSc4U=
+
+Name: lib/jacocoagent.jar
+SHA1-Digest: pRyJF+b5+dbggF9mGo8FfNJNMWQ=
+
+Name: lib/jacocoant.jar
+SHA1-Digest: fd+I9/WhujAdoUzL3lFgm2uKZRs=
+
+Name: plugin.xml
+SHA1-Digest: V5Z5sO1rjreYsHO8VQ5hCum/HmU=
+
+Name: org/eclipse/test/CoreTestApplication.class
+SHA1-Digest: YtRnq+bDVH1riKqeJk6rG94Y8yc=
+

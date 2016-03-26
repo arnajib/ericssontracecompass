@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<component id="org.eclipse.tracecompass.segmentstore.core" modificationStamp="1769" version="1.2">
+    <package visibility="1">
+        <fragment handle="=org.eclipse.tracecompass.segmentstore.core/src&lt;org.eclipse.tracecompass.segmentstore.core"/>
+        <type handle="=org.eclipse.tracecompass.segmentstore.core/src&lt;org.eclipse.tracecompass.segmentstore.core{ISegmentStore.java[ISegmentStore" modificationStamp="1780" restrictions="0" visibility="0"/>
+        <type handle="=org.eclipse.tracecompass.segmentstore.core/src&lt;org.eclipse.tracecompass.segmentstore.core{BasicSegment.java[BasicSegment" modificationStamp="1778" restrictions="0" visibility="0"/>
+        <type handle="=org.eclipse.tracecompass.segmentstore.core/src&lt;org.eclipse.tracecompass.segmentstore.core{ISegment.java[ISegment" modificationStamp="1779" restrictions="0" visibility="0"/>
+        <type handle="=org.eclipse.tracecompass.segmentstore.core/src&lt;org.eclipse.tracecompass.segmentstore.core{SegmentComparators.java[SegmentComparators" modificationStamp="1781" restrictions="1" visibility="0"/>
+        <type handle="=org.eclipse.tracecompass.segmentstore.core/src&lt;org.eclipse.tracecompass.segmentstore.core{package-info.java[package-info" modificationStamp="1782" restrictions="0" visibility="0"/>
+    </package>
+    <package visibility="1">
+        <fragment handle="=org.eclipse.tracecompass.segmentstore.core/src&lt;org.eclipse.tracecompass.segmentstore.core.treemap"/>
+        <type handle="=org.eclipse.tracecompass.segmentstore.core/src&lt;org.eclipse.tracecompass.segmentstore.core.treemap{TreeMapStore.java[TreeMapStore" modificationStamp="1788" restrictions="0" visibility="0"/>
+        <type handle="=org.eclipse.tracecompass.segmentstore.core/src&lt;org.eclipse.tracecompass.segmentstore.core.treemap{package-info.java[package-info" modificationStamp="1787" restrictions="0" visibility="0"/>
+    </package>
+</component>

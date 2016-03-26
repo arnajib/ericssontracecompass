@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<component id="org.eclipse.tracecompass.common.core" modificationStamp="4180" version="1.2">
+    <package visibility="1">
+        <fragment handle="=org.eclipse.tracecompass.common.core/src&lt;org.eclipse.tracecompass.common.core"/>
+        <type handle="=org.eclipse.tracecompass.common.core/src&lt;org.eclipse.tracecompass.common.core{TraceCompassActivator.java[TraceCompassActivator" modificationStamp="4264" restrictions="0" visibility="0"/>
+        <type handle="=org.eclipse.tracecompass.common.core/src&lt;org.eclipse.tracecompass.common.core{package-info.java[package-info" modificationStamp="4265" restrictions="0" visibility="0"/>
+        <type handle="=org.eclipse.tracecompass.common.core/src&lt;org.eclipse.tracecompass.common.core{ObjectUtils.java[ObjectUtils" modificationStamp="4262" restrictions="0" visibility="0"/>
+        <type handle="=org.eclipse.tracecompass.common.core/src&lt;org.eclipse.tracecompass.common.core{NonNullUtils.java[NonNullUtils" modificationStamp="4261" restrictions="0" visibility="0"/>
+    </package>
+    <package visibility="1">
+        <fragment handle="=org.eclipse.tracecompass.common.core/src&lt;org.eclipse.tracecompass.common.core.collect"/>
+        <type handle="=org.eclipse.tracecompass.common.core/src&lt;org.eclipse.tracecompass.common.core.collect{StreamFlattener.java[StreamFlattener" modificationStamp="4268" restrictions="0" visibility="0"/>
+        <type handle="=org.eclipse.tracecompass.common.core/src&lt;org.eclipse.tracecompass.common.core.collect{package-info.java[package-info" modificationStamp="4269" restrictions="0" visibility="0"/>
+        <type handle="=org.eclipse.tracecompass.common.core/src&lt;org.eclipse.tracecompass.common.core.collect{BufferedBlockingQueue.java[BufferedBlockingQueue" modificationStamp="4267" restrictions="0" visibility="0"/>
+    </package>
+</component>

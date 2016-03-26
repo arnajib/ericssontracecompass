@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<component id="org.eclipse.tracecompass.analysis.timing.core" modificationStamp="1870" version="1.2">
+    <package visibility="1">
+        <fragment handle="=org.eclipse.tracecompass.analysis.timing.core/src&lt;org.eclipse.tracecompass.analysis.timing.core.segmentstore"/>
+        <type handle="=org.eclipse.tracecompass.analysis.timing.core/src&lt;org.eclipse.tracecompass.analysis.timing.core.segmentstore{IAnalysisProgressListener.java[IAnalysisProgressListener" modificationStamp="1884" restrictions="0" visibility="0"/>
+        <type handle="=org.eclipse.tracecompass.analysis.timing.core/src&lt;org.eclipse.tracecompass.analysis.timing.core.segmentstore{AbstractSegmentStoreAnalysisEventBasedModule.java[AbstractSegmentStoreAnalysisEventBasedModule" modificationStamp="55545" restrictions="0" visibility="0"/>
+        <type handle="=org.eclipse.tracecompass.analysis.timing.core/src&lt;org.eclipse.tracecompass.analysis.timing.core.segmentstore{AbstractSegmentStoreAnalysisModule.java[AbstractSegmentStoreAnalysisModule" modificationStamp="1884" restrictions="0" visibility="0"/>
+        <type handle="=org.eclipse.tracecompass.analysis.timing.core/src&lt;org.eclipse.tracecompass.analysis.timing.core.segmentstore{ISegmentStoreProvider.java[ISegmentStoreProvider" modificationStamp="1885" restrictions="0" visibility="0"/>
+        <type handle="=org.eclipse.tracecompass.analysis.timing.core/src&lt;org.eclipse.tracecompass.analysis.timing.core.segmentstore{package-info.java[package-info" modificationStamp="1885" restrictions="0" visibility="0"/>
+    </package>
+    <package visibility="1">
+        <fragment handle="=org.eclipse.tracecompass.analysis.timing.core/src&lt;org.eclipse.tracecompass.internal.analysis.timing.core"/>
+        <type handle="=org.eclipse.tracecompass.analysis.timing.core/src&lt;org.eclipse.tracecompass.internal.analysis.timing.core{Activator.java[Activator" modificationStamp="1886" restrictions="0" visibility="0"/>
+        <type handle="=org.eclipse.tracecompass.analysis.timing.core/src&lt;org.eclipse.tracecompass.internal.analysis.timing.core{package-info.java[package-info" modificationStamp="1887" restrictions="0" visibility="0"/>
+    </package>
+</component>

@@ -1,0 +1,26 @@
+Manifest-Version: 1.0
+Archiver-Version: Plexus Archiver
+Built-By: genie.swtbot
+Created-By: Apache Maven 3.1.1
+Build-Jdk: 1.8.0_51
+
+Name: META-INF/maven/org.eclipse.swtbot.features/org.eclipse.swtbot/po
+ m.xml
+SHA-256-Digest: g5XqWx/4c9aMltYSR+eHTR+4QbTaibeB36qnIcZp6mQ=
+
+Name: epl-v10.html
+SHA-256-Digest: mpbQ2vmKpvtKpTDTmcdCxmEhsL2uSh9/+iLSE14d9/0=
+
+Name: META-INF/maven/org.eclipse.swtbot.features/org.eclipse.swtbot/po
+ m.properties
+SHA-256-Digest: uiaUsGfqRRlXzKOty1Liy6LDzD/frbRM1JXH+ayVx+s=
+
+Name: feature.xml
+SHA-256-Digest: AVN37akRxObOpWIgGGhiL89H0NvEYNpffmNr5fnIHM4=
+
+Name: feature.properties
+SHA-256-Digest: DMCyrF6xwUyDHAR6QwUQXTGkivesAys0yofZvHEbD/A=
+
+Name: license.html
+SHA-256-Digest: X315zLynvdLZ4DaYSopgxruQUUEadA3FOPNviC+YO24=
+

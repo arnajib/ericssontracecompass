@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<component id="org.eclipse.tracecompass.analysis.graph.core" modificationStamp="1802" version="1.2">
+    <package visibility="1">
+        <fragment handle="=org.eclipse.tracecompass.analysis.graph.core/src&lt;org.eclipse.tracecompass.analysis.graph.core.building"/>
+        <type handle="=org.eclipse.tracecompass.analysis.graph.core/src&lt;org.eclipse.tracecompass.analysis.graph.core.building{AbstractTraceEventHandler.java[AbstractTraceEventHandler" modificationStamp="1826" restrictions="0" visibility="0"/>
+        <type handle="=org.eclipse.tracecompass.analysis.graph.core/src&lt;org.eclipse.tracecompass.analysis.graph.core.building{ITraceEventHandler.java[ITraceEventHandler" modificationStamp="1828" restrictions="0" visibility="0"/>
+        <type handle="=org.eclipse.tracecompass.analysis.graph.core/src&lt;org.eclipse.tracecompass.analysis.graph.core.building{TmfGraphBuilderModule.java[TmfGraphBuilderModule" modificationStamp="1829" restrictions="0" visibility="0"/>
+        <type handle="=org.eclipse.tracecompass.analysis.graph.core/src&lt;org.eclipse.tracecompass.analysis.graph.core.building{AbstractTmfGraphProvider.java[AbstractTmfGraphProvider" modificationStamp="1825" restrictions="0" visibility="0"/>
+        <type handle="=org.eclipse.tracecompass.analysis.graph.core/src&lt;org.eclipse.tracecompass.analysis.graph.core.building{ITmfGraphProvider.java[ITmfGraphProvider" modificationStamp="1827" restrictions="0" visibility="0"/>
+        <type handle="=org.eclipse.tracecompass.analysis.graph.core/src&lt;org.eclipse.tracecompass.analysis.graph.core.building{package-info.java[package-info" modificationStamp="1830" restrictions="0" visibility="0"/>
+    </package>
+    <package visibility="1">
+        <fragment handle="=org.eclipse.tracecompass.analysis.graph.core/src&lt;org.eclipse.tracecompass.analysis.graph.core.base"/>
+        <type handle="=org.eclipse.tracecompass.analysis.graph.core/src&lt;org.eclipse.tracecompass.analysis.graph.core.base{TmfEdge.java[TmfEdge" modificationStamp="1820" restrictions="0" visibility="0"/>
+        <type handle="=org.eclipse.tracecompass.analysis.graph.core/src&lt;org.eclipse.tracecompass.analysis.graph.core.base{package-info.java[package-info" modificationStamp="1824" restrictions="0" visibility="0"/>
+        <type handle="=org.eclipse.tracecompass.analysis.graph.core/src&lt;org.eclipse.tracecompass.analysis.graph.core.base{IGraphWorker.java[IGraphWorker" modificationStamp="1817" restrictions="0" visibility="0"/>
+        <type handle="=org.eclipse.tracecompass.analysis.graph.core/src&lt;org.eclipse.tracecompass.analysis.graph.core.base{CycleDetectedException.java[CycleDetectedException" modificationStamp="1816" restrictions="0" visibility="0"/>
+        <type handle="=org.eclipse.tracecompass.analysis.graph.core/src&lt;org.eclipse.tracecompass.analysis.graph.core.base{Messages.java[Messages" modificationStamp="1819" restrictions="0" visibility="0"/>
+        <type handle="=org.eclipse.tracecompass.analysis.graph.core/src&lt;org.eclipse.tracecompass.analysis.graph.core.base{TmfVertex.java[TmfVertex" modificationStamp="1822" restrictions="0" visibility="0"/>
+        <type handle="=org.eclipse.tracecompass.analysis.graph.core/src&lt;org.eclipse.tracecompass.analysis.graph.core.base{TmfGraph.java[TmfGraph" modificationStamp="1822" restrictions="0" visibility="0"/>
+        <type handle="=org.eclipse.tracecompass.analysis.graph.core/src&lt;org.eclipse.tracecompass.analysis.graph.core.base{ITmfGraphVisitor.java[ITmfGraphVisitor" modificationStamp="1818" restrictions="0" visibility="0"/>
+    </package>
+    <package visibility="1">
+        <fragment handle="=org.eclipse.tracecompass.analysis.graph.core/src&lt;org.eclipse.tracecompass.internal.analysis.graph.core"/>
+        <type handle="=org.eclipse.tracecompass.analysis.graph.core/src&lt;org.eclipse.tracecompass.internal.analysis.graph.core{Activator.java[Activator" modificationStamp="1835" restrictions="0" visibility="0"/>
+        <type handle="=org.eclipse.tracecompass.analysis.graph.core/src&lt;org.eclipse.tracecompass.internal.analysis.graph.core{package-info.java[package-info" modificationStamp="1838" restrictions="0" visibility="0"/>
+    </package>
+    <package visibility="1">
+        <fragment handle="=org.eclipse.tracecompass.analysis.graph.core/src&lt;org.eclipse.tracecompass.analysis.graph.core.criticalpath"/>
+        <type handle="=org.eclipse.tracecompass.analysis.graph.core/src&lt;org.eclipse.tracecompass.analysis.graph.core.criticalpath{ICriticalPathAlgorithm.java[ICriticalPathAlgorithm" modificationStamp="1833" restrictions="0" visibility="0"/>
+        <type handle="=org.eclipse.tracecompass.analysis.graph.core/src&lt;org.eclipse.tracecompass.analysis.graph.core.criticalpath{CriticalPathModule.java[CriticalPathModule" modificationStamp="1832" restrictions="0" visibility="0"/>
+        <type handle="=org.eclipse.tracecompass.analysis.graph.core/src&lt;org.eclipse.tracecompass.analysis.graph.core.criticalpath{CriticalPathAlgorithmException.java[CriticalPathAlgorithmException" modificationStamp="1831" restrictions="0" visibility="0"/>
+        <type handle="=org.eclipse.tracecompass.analysis.graph.core/src&lt;org.eclipse.tracecompass.analysis.graph.core.criticalpath{package-info.java[package-info" modificationStamp="1834" restrictions="0" visibility="0"/>
+    </package>
+</component>

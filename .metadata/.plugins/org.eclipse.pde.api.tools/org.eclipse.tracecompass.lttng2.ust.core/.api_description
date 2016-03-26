@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<component id="org.eclipse.tracecompass.lttng2.ust.core" modificationStamp="3540" version="1.2">
+    <package visibility="1">
+        <fragment handle="=org.eclipse.tracecompass.lttng2.ust.core/src&lt;org.eclipse.tracecompass.lttng2.ust.core.analysis.debuginfo"/>
+        <type handle="=org.eclipse.tracecompass.lttng2.ust.core/src&lt;org.eclipse.tracecompass.lttng2.ust.core.analysis.debuginfo{BinaryCallsite.java[BinaryCallsite" modificationStamp="3569" restrictions="0" visibility="0"/>
+        <type handle="=org.eclipse.tracecompass.lttng2.ust.core/src&lt;org.eclipse.tracecompass.lttng2.ust.core.analysis.debuginfo{UstDebugInfoAnalysisModule.java[UstDebugInfoAnalysisModule" modificationStamp="3572" restrictions="0" visibility="0"/>
+        <type handle="=org.eclipse.tracecompass.lttng2.ust.core/src&lt;org.eclipse.tracecompass.lttng2.ust.core.analysis.debuginfo{UstDebugInfoBinaryAspect.java[UstDebugInfoBinaryAspect" modificationStamp="3572" restrictions="0" visibility="0"/>
+        <type handle="=org.eclipse.tracecompass.lttng2.ust.core/src&lt;org.eclipse.tracecompass.lttng2.ust.core.analysis.debuginfo{package-info.java[package-info" modificationStamp="3575" restrictions="0" visibility="0"/>
+        <type handle="=org.eclipse.tracecompass.lttng2.ust.core/src&lt;org.eclipse.tracecompass.lttng2.ust.core.analysis.debuginfo{Messages.java[Messages" modificationStamp="3570" restrictions="0" visibility="0"/>
+        <type handle="=org.eclipse.tracecompass.lttng2.ust.core/src&lt;org.eclipse.tracecompass.lttng2.ust.core.analysis.debuginfo{UstDebugInfoSourceAspect.java[UstDebugInfoSourceAspect" modificationStamp="3573" restrictions="0" visibility="0"/>
+    </package>
+    <package visibility="1">
+        <fragment handle="=org.eclipse.tracecompass.lttng2.ust.core/src&lt;org.eclipse.tracecompass.lttng2.ust.core.analysis.memory"/>
+        <type handle="=org.eclipse.tracecompass.lttng2.ust.core/src&lt;org.eclipse.tracecompass.lttng2.ust.core.analysis.memory{UstMemoryAnalysisModule.java[UstMemoryAnalysisModule" modificationStamp="3578" restrictions="0" visibility="0"/>
+        <type handle="=org.eclipse.tracecompass.lttng2.ust.core/src&lt;org.eclipse.tracecompass.lttng2.ust.core.analysis.memory{Messages.java[Messages" modificationStamp="3576" restrictions="0" visibility="0"/>
+    </package>
+    <package visibility="1">
+        <fragment handle="=org.eclipse.tracecompass.lttng2.ust.core/src&lt;org.eclipse.tracecompass.lttng2.ust.core.trace"/>
+        <type handle="=org.eclipse.tracecompass.lttng2.ust.core/src&lt;org.eclipse.tracecompass.lttng2.ust.core.trace{LttngUstTrace.java[LttngUstTrace" modificationStamp="3562" restrictions="0" visibility="0"/>
+        <type handle="=org.eclipse.tracecompass.lttng2.ust.core/src&lt;org.eclipse.tracecompass.lttng2.ust.core.trace{LttngUstEvent.java[LttngUstEvent" modificationStamp="3559" restrictions="0" visibility="0"/>
+        <type handle="=org.eclipse.tracecompass.lttng2.ust.core/src&lt;org.eclipse.tracecompass.lttng2.ust.core.trace{LttngUstEventFactory.java[LttngUstEventFactory" modificationStamp="3560" restrictions="0" visibility="0"/>
+        <type handle="=org.eclipse.tracecompass.lttng2.ust.core/src&lt;org.eclipse.tracecompass.lttng2.ust.core.trace{Messages.java[Messages" modificationStamp="3562" restrictions="0" visibility="0"/>
+    </package>
+    <package visibility="1">
+        <fragment handle="=org.eclipse.tracecompass.lttng2.ust.core/src&lt;org.eclipse.tracecompass.lttng2.ust.core.trace.layout"/>
+        <type handle="=org.eclipse.tracecompass.lttng2.ust.core/src&lt;org.eclipse.tracecompass.lttng2.ust.core.trace.layout{package-info.java[package-info" modificationStamp="3580" restrictions="0" visibility="0"/>
+        <type handle="=org.eclipse.tracecompass.lttng2.ust.core/src&lt;org.eclipse.tracecompass.lttng2.ust.core.trace.layout{ILttngUstEventLayout.java[ILttngUstEventLayout" modificationStamp="3580" restrictions="0" visibility="0"/>
+    </package>
+</component>
